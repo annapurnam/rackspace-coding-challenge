@@ -18,7 +18,7 @@ class SemanticVersion
   def <=>(string2)
     string1 = self
 
-    [:major,:minor,:patch].each do |part|
+    [:major, :minor, :patch].each do |part|
       result= string1.send(part) <=> string2.send(part)
       if result != 0
         return result
@@ -29,7 +29,7 @@ class SemanticVersion
 
   end
 
-  def compare_pre(pre1,pre2)
+  def compare_pre(pre1, pre2)
     if pre1.nil? || pre2.nil?
       return 0 if pre1.nil? && pre2.nil?
       return 1 if pre1.nil?
@@ -51,7 +51,7 @@ class SemanticVersion
 
   def identifiers(pre)
     array = pre.split(".")
-    array.each_with_index {|e,i| array[i] = Integer(e) if /\A\d+\z/.match(e)}
+    array.each_with_index { |e, i| array[i] = Integer(e) if /\A\d+\z/.match(e) }
     return array
   end
 
@@ -78,9 +78,13 @@ class SemanticVersion
 
   def pessimisticOperation(string2)
 
-    stringMatchValid= /\A~>(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][a-zA-Z0-9-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][a-zA-Z0-9-]*))*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?\Z/.match(string2)
     stringToCompare = string2[2..-1]
-    semanticVerCompare = SemanticVersion.new(stringToCompare)
+    begin
+      semanticVerCompare = SemanticVersion.new(stringToCompare)
+    rescue
+      puts "String provided didn't meet requirements of Semantic Version and the Pessimistic Operator in the beginning"
+      return
+    end
     puts "Anu"
 
     majorVersionIncrement = (semanticVerCompare.major.to_i+1 == self.major.to_i && self.minor.to_i == 0 && self.patch.to_i == 0)

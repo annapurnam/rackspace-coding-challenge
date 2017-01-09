@@ -15,7 +15,7 @@ if __FILE__==$0
   puts SemanticVersion.new('1.2.0') > SemanticVersion.new('1.1.0')
   puts SemanticVersion.new('1.1.0') < SemanticVersion.new('1.0.9')
 
-  puts SemanticVersion.new('1.1.0').pessimisticOperation('~>1.2.0')
+  puts SemanticVersion.new('1.1.0').pessimisticOperation('~>1.2.3.0')
   puts SemanticVersion.new('1.2.0').pessimisticOperation('~>1.1.0')
   puts SemanticVersion.new('2.0.0').pessimisticOperation('~>1.1.0')
 end
